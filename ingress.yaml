@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fuseki
+  labels:
+    name: fuseki
+spec:
+  rules:
+  - host: fuseki.lab.sspcloud.fr
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: fuseki
+            port: 
+              number: 80

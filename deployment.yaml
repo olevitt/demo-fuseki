@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fuseki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fuseki
+  template:
+    metadata:
+      labels:
+        app: fuseki
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: fuseki
+      containers:
+      - name: myapp
+        image: secoresearch/fuseki:4.7.0
+        volumeMounts:
+          - mountPath: /fuseki-base/databases
+            name: data
+            subPath: /databases
+          - mountPath: /fuseki-base/configuration
+            name: data
+            subPath: /configuration
+            
+        env:
+          - name: ADMIN_PASSWORD
+            value: changeme
